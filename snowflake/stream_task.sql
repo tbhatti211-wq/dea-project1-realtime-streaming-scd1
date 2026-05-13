@@ -66,6 +66,7 @@ END;
 $$;
 
 CREATE OR REPLACE TASK task_merge_employee_scd1
+  -- Replace with your compute warehouse, e.g. WAREHOUSE = COMPUTE_WH.
   WAREHOUSE = <YOUR_WAREHOUSE>
   SCHEDULE = 'USING CRON * * * * * UTC'
   WHEN SYSTEM$STREAM_HAS_DATA('raw_employee_events_stream')
