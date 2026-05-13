@@ -1,4 +1,7 @@
 USE ROLE ACCOUNTADMIN;
+-- Required replacements before execution:
+--   <AWS_IAM_ROLE_ARN> : IAM role ARN trusted by Snowflake storage integration.
+--   <YOUR_BUCKET>       : S3 bucket name; use the same value for every <YOUR_BUCKET> occurrence.
 
 CREATE OR REPLACE STORAGE INTEGRATION employee_events_s3_int
   TYPE = EXTERNAL_STAGE
