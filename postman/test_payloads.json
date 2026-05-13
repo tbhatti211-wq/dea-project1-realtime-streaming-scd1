@@ -1,28 +1,12 @@
 {
-  "valid_new_employee": {
-    "employee_id": "1001",
-    "first_name": "Ava",
-    "last_name": "Khan",
-    "email": "ava.khan@company.com",
-    "department": "Finance",
-    "job_title": "Analyst",
-    "salary": 82000
-  },
-  "valid_employee_update": {
-    "employee_id": "1001",
-    "first_name": "Ava",
-    "last_name": "Khan",
-    "email": "ava.khan@company.com",
-    "department": "FP&A",
-    "job_title": "Senior Analyst",
-    "salary": 94000
-  },
-  "invalid_missing_required_field": {
-    "employee_id": "1002",
-    "first_name": "Liam",
-    "last_name": "Patel",
-    "department": "Engineering",
-    "job_title": "Developer",
-    "salary": 112000
-  }
+    "full_load": [
+        {"employee_id": "E001", "employee_name": "John Smith", "department": "Engineering", "designation": "Software Engineer", "salary": 95000, "joining_date": "2022-01-15", "city": "San Francisco", "state": "CA", "country": "USA"},
+        {"employee_id": "E002", "employee_name": "Emily Johnson", "department": "Marketing", "designation": "Marketing Manager", "salary": 105000, "joining_date": "2021-07-10", "city": "New York", "state": "NY", "country": "USA"}
+    ],
+    "incremental_scd1": [
+        {"employee_id": "E001", "employee_name": "John Smith", "department": "Engineering", "designation": "Senior Software Engineer", "salary": 105000, "joining_date": "2022-01-15", "city": "San Francisco", "state": "CA", "country": "USA"}
+    ],
+    "invalid_data": [
+        {"employee_id": "", "employee_name": "Invalid Person", "department": "HR", "salary": 50000}
+    ]
 }
