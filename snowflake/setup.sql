@@ -1,21 +1,17 @@
-USE ROLE ACCOUNTADMIN;
--- Required replacements before execution:
---   <AWS_IAM_ROLE_ARN> : IAM role ARN trusted by Snowflake storage integration.
---   <YOUR_BUCKET>       : S3 bucket name; use the same value for every <YOUR_BUCKET> occurrence.
+-- Storage Integration
+CREATE OR REPLACE STORAGE INTEGRATION DEA_REAL_TIME_SCD1_INT
+    TYPE = EXTERNAL_STAGE
+    STORAGE_PROVIDER = 'S3'
+    ENABLED = TRUE
+    STORAGE_AWS_ROLE_ARN = '<your-role-arn>'
+    STORAGE_ALLOWED_LOCATIONS = ('s3://your-bucket/');
 
-CREATE OR REPLACE STORAGE INTEGRATION employee_events_s3_int
-  TYPE = EXTERNAL_STAGE
-  STORAGE_PROVIDER = S3
-  ENABLED = TRUE
-  STORAGE_AWS_ROLE_ARN = '<AWS_IAM_ROLE_ARN>'
-  STORAGE_ALLOWED_LOCATIONS = ('s3://<YOUR_BUCKET>/employee-events/');
+-- File Format
+CREATE OR REPLACE FILE FORMAT your_file_format
+    TYPE = 'JSON';
 
-CREATE OR REPLACE FILE FORMAT employee_events_json_ff
-  TYPE = JSON
-  STRIP_OUTER_ARRAY = FALSE
-  IGNORE_UTF8_ERRORS = TRUE;
-
-CREATE OR REPLACE STAGE employee_events_stage
-  STORAGE_INTEGRATION = employee_events_s3_int
-  URL = 's3://<YOUR_BUCKET>/employee-events/raw/'
-  FILE_FORMAT = employee_events_json_ff;
+-- External Stage
+CREATE OR REPLACE STAGE your_stage
+    URL = 's3://your-data-bucket/'
+    STORAGE_INTEGRATION = DEA_REAL_TIME_SCD1_INT
+    FILE_FORMAT = your_file_format;
