@@ -37,9 +37,6 @@ dea-project1-realtime-streaming-scd1/
 ├── postman/
 │   └── test_payloads.json          # Full load, incremental, invalid test cases
 │
-├── architecture/
-│   └── architecture_diagram.png    # End-to-end architecture diagram
-│
 └── README.md
 ```
 
@@ -62,27 +59,11 @@ dea-project1-realtime-streaming-scd1/
 ---
 
 ## 🏗️ Architecture
+<img width="1234" height="500" alt="image" src="https://github.com/user-attachments/assets/ade716b4-fbad-4f7d-8a39-80b811399d7c" />
 
 ```
-[Postman POST]
-      ↓
-[API Gateway]
-      ↓
-[Lambda — Python]
-      ├── valid record   → [Kinesis Data Stream] → [Firehose] → [S3 Data Bucket]
-      └── invalid record → [S3 Error Bucket]
-                                    ↓
-                       [S3 Event Notification → SQS]
-                                    ↓
-                               [Snowpipe]
-                                    ↓
-                        [Snowflake Raw Table]  ← append-only, full history
-                                    ↓
-                         [Snowflake Stream]    ← CDC: new + changed rows only
-                                    ↓
-                    [Task + Stored Procedure]  ← scheduled, cost-controlled
-                                    ↓
-                    [Snowflake Transformed Table] ← SCD Type 1, current state
+> End-to-end event-driven pipeline from REST API ingestion 
+> through AWS streaming infrastructure to Snowflake transformation.
 ```
 
 ---
