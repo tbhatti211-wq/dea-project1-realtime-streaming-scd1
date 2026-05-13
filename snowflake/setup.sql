@@ -1,0 +1,18 @@
+USE ROLE ACCOUNTADMIN;
+
+CREATE OR REPLACE STORAGE INTEGRATION employee_events_s3_int
+  TYPE = EXTERNAL_STAGE
+  STORAGE_PROVIDER = S3
+  ENABLED = TRUE
+  STORAGE_AWS_ROLE_ARN = '<AWS_IAM_ROLE_ARN>'
+  STORAGE_ALLOWED_LOCATIONS = ('s3://<YOUR_BUCKET>/employee-events/');
+
+CREATE OR REPLACE FILE FORMAT employee_events_json_ff
+  TYPE = JSON
+  STRIP_OUTER_ARRAY = FALSE
+  IGNORE_UTF8_ERRORS = TRUE;
+
+CREATE OR REPLACE STAGE employee_events_stage
+  STORAGE_INTEGRATION = employee_events_s3_int
+  URL = 's3://<YOUR_BUCKET>/employee-events/raw/'
+  FILE_FORMAT = employee_events_json_ff;
