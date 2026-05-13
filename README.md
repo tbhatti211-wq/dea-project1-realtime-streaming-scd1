@@ -241,7 +241,7 @@ This project was built as part of the Data Engineering Academy curriculum to dem
 - **Debugging under pressure** — identified and fixed a real MERGE idempotency bug during testing
 
 **Author:** Talib Hussain
-**GitHub:** [github.com/kibraahsan](https://github.com/kibraahsan)
+**GitHub:** [github.com/kibraahsan](https://github.com/tbhatti211-wq)
 **LinkedIn:** [linkedin.com/in/talhussain](https://linkedin.com/in/talhussain)
 
 ---
