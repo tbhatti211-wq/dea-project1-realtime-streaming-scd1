@@ -1,0 +1,28 @@
+{
+  "valid_new_employee": {
+    "employee_id": "1001",
+    "first_name": "Ava",
+    "last_name": "Khan",
+    "email": "ava.khan@company.com",
+    "department": "Finance",
+    "job_title": "Analyst",
+    "salary": 82000
+  },
+  "valid_employee_update": {
+    "employee_id": "1001",
+    "first_name": "Ava",
+    "last_name": "Khan",
+    "email": "ava.khan@company.com",
+    "department": "FP&A",
+    "job_title": "Senior Analyst",
+    "salary": 94000
+  },
+  "invalid_missing_required_field": {
+    "employee_id": "1002",
+    "first_name": "Liam",
+    "last_name": "Patel",
+    "department": "Engineering",
+    "job_title": "Developer",
+    "salary": 112000
+  }
+}
