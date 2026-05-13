@@ -1,27 +1,51 @@
-CREATE OR REPLACE TABLE raw_employee_events (
-  src_filename STRING,
-  src_row_number NUMBER,
-  employee_id STRING,
-  first_name STRING,
-  last_name STRING,
-  email STRING,
-  department STRING,
-  job_title STRING,
-  salary NUMBER(12,2),
-  ingested_at TIMESTAMP_NTZ,
-  validation_status STRING,
-  validation_message STRING,
-  load_timestamp TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP()
+-- ============================================================
+-- 02_tables.sql
+-- Raw Table and Transformed Table DDL
+-- Run AFTER 01_setup.sql
+-- ============================================================
+
+USE ROLE ACCOUNTADMIN;
+USE WAREHOUSE COMPUTE_WH;
+USE SCHEMA DEA_REAL_TIME_SCD1.RAW;
+
+
+-- -----------------------------------------------
+-- Raw Table (VARIANT — schema on read)
+-- -----------------------------------------------
+-- Stores JSON exactly as received from S3
+-- Append-only — never updated or deleted
+-- Full history of every record ever received
+
+CREATE OR REPLACE TABLE DEA_REAL_TIME_SCD1.RAW.EMPLOYEE_RAW
+(
+    JSON_DATA VARIANT
 );
 
-CREATE OR REPLACE TABLE dim_employee_scd1 (
-  employee_id STRING PRIMARY KEY,
-  first_name STRING,
-  last_name STRING,
-  email STRING,
-  department STRING,
-  job_title STRING,
-  salary NUMBER(12,2),
-  source_ingested_at TIMESTAMP_NTZ,
-  updated_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP()
+-- Verify
+SELECT * FROM DEA_REAL_TIME_SCD1.RAW.EMPLOYEE_RAW LIMIT 10;
+
+
+-- -----------------------------------------------
+-- Transformed Table (typed columns — SCD Type 1)
+-- -----------------------------------------------
+-- One row per employee — always current state
+-- Updated via MERGE in stored procedure
+-- No history kept — that is the definition of SCD Type 1
+
+CREATE OR REPLACE TABLE DEA_REAL_TIME_SCD1.TRANSFORMED.EMPLOYEE_TRANSFORMED
+(
+    EMPLOYEE_ID     STRING,
+    EMPLOYEE_NAME   STRING,
+    DEPARTMENT      STRING,
+    DESIGNATION     STRING,
+    SALARY          INTEGER,
+    JOINING_DATE    DATE,
+    CITY            STRING,
+    STATE           STRING,
+    COUNTRY         STRING,
+    INSERT_DTS      TIMESTAMP(6),
+    UPDATE_DTS      TIMESTAMP(6)
 );
+
+-- Verify
+SELECT * FROM DEA_REAL_TIME_SCD1.TRANSFORMED.EMPLOYEE_TRANSFORMED LIMIT 10;
